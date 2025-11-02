@@ -18,7 +18,7 @@ async function yourCallerFunction(...args){
 
 In your worker you do:
 ```javascript
-self.importScripts("https://friendlyted.github.io/swFn/sw.js"); // this will crate a global variable SERVICE_WORKER_FUNCTIONS 
+self.importScripts("https://friendlyted.github.io/swFn/sw.js"); // this will create a global variable SERVICE_WORKER_FUNCTIONS 
 // ...
 SERVICE_WORKER_FUNCTIONS.set("_YOUR_FUNCTION_CODE_HERE_", (...args) => {
     // do staff here

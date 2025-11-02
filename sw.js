@@ -16,29 +16,25 @@ self.onmessage = (event) => {
     const type = data.type;
     const id = data.id;
 
-    setTimeout(()=>{
-
-        if (!SERVICE_WORKER_FUNCTIONS.has(type)) {
-            const error = new Error(`There is no worker function for type ${type}`)
-            responseException(event.source, id, type, error)
-        } else {
-            const targetFn = SERVICE_WORKER_FUNCTIONS.get(type);
-            let result;
-            try {
-                result = targetFn(...data.args);
-            } catch (ex) {
-                responseException(event.source, id, type, ex);
-                return;
-            }
-
-            if (result instanceof Promise) {
-                result
-                    .then(r => event.source.postMessage({id, type, result: r}))
-                    .catch(ex => responseException(event.source, id, type, ex));
-            } else {
-                event.source.postMessage({id, type, result});
-            }
+    if (!SERVICE_WORKER_FUNCTIONS.has(type)) {
+        const error = new Error(`There is no worker function for type ${type}`)
+        responseException(event.source, id, type, error)
+    } else {
+        const targetFn = SERVICE_WORKER_FUNCTIONS.get(type);
+        let result;
+        try {
+            result = targetFn(...data.args);
+        } catch (ex) {
+            responseException(event.source, id, type, ex);
+            return;
         }
 
-    }, 2000)
+        if (result instanceof Promise) {
+            result
+                .then(r => event.source.postMessage({id, type, result: r}))
+                .catch(ex => responseException(event.source, id, type, ex));
+        } else {
+            event.source.postMessage({id, type, result});
+        }
+    }
 }
