@@ -1,13 +1,14 @@
-export async function swFn(type, ...args) {
+export async function swFrontend(type, ...args) {
     return new Promise((ok, err) => {
         const id = Math.random().toString(36).substring(2);
 
         navigator.serviceWorker.addEventListener("message", (event) => {
             const data = event.data;
+            if(typeof data !== "object") return;
             if (data.type !== type) return;
             if (data.id !== id) return;
 
-            if (data.exception === true) {
+            if (data["exception"] === true) {
                 const restoredError = new Error(data.message);
                 restoredError.name = data.name;
                 try {
