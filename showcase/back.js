@@ -1,4 +1,4 @@
-import {SwBackend} from "../swBackend.js";
+import {SwBackend} from "https://friendlyted.github.io/swFn/swBackend.js";
 import Codes from "./codes.js";
 
 function syncOk() {

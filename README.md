@@ -7,7 +7,7 @@ Library for calling service worker staff as async functions.
 In your page you include:
 
 ```javascript
-import {swFrontend} from "https://friendlyted.github.io/swFrontend/swFrontend.js";
+import {swFrontend} from "https://friendlyted.github.io/swFn/swFrontend.js";
 
 // ...
 async function yourCallerFunction(...args) {
@@ -22,12 +22,16 @@ async function yourCallerFunction(...args) {
 In your worker you do:
 
 ```javascript
-self.importScripts("https://friendlyted.github.io/swFrontend/SwBack.js"); // this will create a global variable SERVICE_WORKER_FUNCTIONS 
+import {SwBackend} from "https://friendlyted.github.io/swFn/swBackend.js"; 
 // ...
-SERVICE_WORKER_FUNCTIONS.set("_YOUR_FUNCTION_CODE_HERE_", (...args) => {
+function yourFunction(...args) {
     // do staff here
     return your_payload;
-});
+}
+// ...
+new SwBackend(self)
+    .attach()
+    .add("_YOUR_FUNCTION_CODE_HERE_", yourFunction);
 // ...
 ```
 

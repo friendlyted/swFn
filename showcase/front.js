@@ -1,4 +1,4 @@
-import {swFrontend} from "../swFrontend.js";
+import {swFrontend} from "https://friendlyted.github.io/swFn/swFrontend.js";
 import Codes from "./codes.js";
 
 await navigator.serviceWorker.register("./back.js", {type: "module"});
